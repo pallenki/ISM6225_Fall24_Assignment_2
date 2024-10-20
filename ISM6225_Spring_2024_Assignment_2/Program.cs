@@ -120,16 +120,16 @@ namespace Assignment_2
             try
             {
                 for (int i = 0; i < nums.Length; i++)
-            {
-                for (int j = i + 1; j < nums.Length; j++)
                 {
-                    // Check if the two numbers add up to the target
-                    if (nums[i] + nums[j] == target)
+                    for (int j = i + 1; j < nums.Length; j++)
                     {
-                        return new int[] { i, j }; // Return the indices
+                        // Check if the two numbers add up to the target
+                        if (nums[i] + nums[j] == target)
+                        {
+                            return new int[] { i, j }; // Return the indices
+                        }
                     }
                 }
-            }
 
                 // Return an empty array if no solution is found
                 return new int[0];
@@ -145,47 +145,17 @@ namespace Assignment_2
         {
             try
             {
-                // Initialize the variables to track the largest and smallest numbers
-            int[] max = { int.MinValue, int.MinValue, int.MinValue }; // For the largest three
-            int[] min = { int.MaxValue, int.MaxValue };             // For the smallest two
-
-            // Traverse the array to find the required values
-            foreach (int num in nums)
-            {
-                // Update the largest three
-                if (num > max[0])
-                {
-                    max[2] = max[1];
-                    max[1] = max[0];
-                    max[0] = num;
-                }
-                else if (num > max[1])
-                {
-                    max[2] = max[1];
-                    max[1] = num;
-                }
-                else if (num > max[2])
-                {
-                    max[2] = num;
-                }
-
-                // Update the smallest two
-                if (num < min[0])
-                {
-                    min[1] = min[0];
-                    min[0] = num;
-                }
-                else if (num < min[1])
-                {
-                    min[1] = num;
-                }
-            }
-
-                // Calculate the maximum product of three numbers
-                int product1 = max[0] * max[1] * max[2]; // Product of the three largest numbers
-                int product2 = min[0] * min[1] * max[0];  // Product of the two smallest and the largest
-
-                return Math.Max(product1, product2); // Return the maximum of the two products
+                // Sort the array
+                Array.Sort(nums);
+    
+                // The maximum product of three numbers can be from:
+                // 1. The product of the last three numbers (largest numbers)
+                // 2. The product of the two smallest numbers (negative) and the largest number
+                int n = nums.Length;
+                int maxProduct = Math.Max(nums[n - 1] * nums[n - 2] * nums[n - 3], // Product of the three largest
+                                          nums[0] * nums[1] * nums[n - 1]); // Product of two smallest and largest
+    
+                return maxProduct;
             }
             catch (Exception)
             {
@@ -283,16 +253,16 @@ namespace Assignment_2
 
                 int a = 0; 
                 int b = 1;
-                int fib = 0; 
+                int currentnum = 0; 
 
                 for (int i = 2; i <= n; i++)
                 {
-                    fib = a + b; 
+                    currentnum = a + b; 
                     a = b; 
-                    b = fib; 
+                    b = currentnum; 
                 }
                 
-                return fib; 
+                return currentnum; 
             }
             catch (Exception)
             {
