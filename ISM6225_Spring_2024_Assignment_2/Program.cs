@@ -62,29 +62,17 @@ namespace Assignment_2
         {
             try
             {
-                // Create a boolean array to track the presence of numbers
-            bool[] isCurrent = new bool[nums.Length + 1]; // +1 to handle 1-based index
-            
-            // Mark the numbers that are present in the input array
-            foreach (int num in nums)
-            {
-                if (num >= 1 && num <= nums.Length)
+                HashSet<int> numSet = new HashSet<int>(nums);
+                List<int> missingNumbers = new List<int>();
+
+                // Check for numbers from 1 to n
+                for (int i = 1; i <= nums.Length; i++)
                 {
-                    isCurrent[num] = true;
+                    if (!numSet.Contains(i))
+                    {
+                        missingNumbers.Add(i);
+                    }
                 }
-            }
-            
-            // Create a list to store missing numbers
-            List<int> missingNumbers = new List<int>();
-            
-            // Find the numbers that are missing
-            for (int i = 1; i <= nums.Length; i++)
-            {
-                if (!isCurrent[i])
-                {
-                    missingNumbers.Add(i);
-                }
-            }
 
                 return missingNumbers;
             }
