@@ -87,34 +87,26 @@ namespace Assignment_2
         {
             try
             {
-                // Two pointers approach
-            int left = 0;                   // Pointer for even numbers
-            int right = nums.Length - 1;    // Pointer for odd numbers
-
-            while (left < right)
-            {
-                // If the left number is even, just move the left pointer
-                if (nums[left] % 2 == 0)
+                List<int> evenNums = new List<int>();
+                List<int> oddNums = new List<int>();
+    
+                // Separate even and odd numbers
+                foreach (int num in nums)
                 {
-                    left++;
+                    if (num % 2 == 0)
+                    {
+                        evenNums.Add(num);
+                    }
+                    else
+                    {
+                        oddNums.Add(num);
+                    }
                 }
-                // If the right number is odd, just move the right pointer
-                else if (nums[right] % 2 == 1)
-                {
-                    right--;
-                }
-                // Otherwise, swap the left odd number with the right even number
-                else
-                {
-                    int temp = nums[left];
-                    nums[left] = nums[right];
-                    nums[right] = temp;
-                    left++;
-                    right--;
-                }
-            }
-
-                return nums;
+    
+                // Combine even and odd numbers
+                evenNums.AddRange(oddNums);
+    
+                return evenNums.ToArray();
             }
             catch (Exception)
             {
