@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Assignment_2
@@ -62,8 +62,31 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
+                // Create a boolean array to track the presence of numbers
+            bool[] isCurrent = new bool[nums.Length + 1]; // +1 to handle 1-based index
+            
+            // Mark the numbers that are present in the input array
+            foreach (int num in nums)
+            {
+                if (num >= 1 && num <= nums.Length)
+                {
+                    isCurrent[num] = true;
+                }
+            }
+            
+            // Create a list to store missing numbers
+            List<int> missingNumbers = new List<int>();
+            
+            // Find the numbers that are missing
+            for (int i = 1; i <= nums.Length; i++)
+            {
+                if (!isCurrent[i])
+                {
+                    missingNumbers.Add(i);
+                }
+            }
+
+                return missingNumbers;
             }
             catch (Exception)
             {
@@ -76,8 +99,34 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Two pointers approach
+            int left = 0;                   // Pointer for even numbers
+            int right = nums.Length - 1;    // Pointer for odd numbers
+
+            while (left < right)
+            {
+                // If the left number is even, just move the left pointer
+                if (nums[left] % 2 == 0)
+                {
+                    left++;
+                }
+                // If the right number is odd, just move the right pointer
+                else if (nums[right] % 2 == 1)
+                {
+                    right--;
+                }
+                // Otherwise, swap the left odd number with the right even number
+                else
+                {
+                    int temp = nums[left];
+                    nums[left] = nums[right];
+                    nums[right] = temp;
+                    left++;
+                    right--;
+                }
+            }
+
+                return nums;
             }
             catch (Exception)
             {
@@ -90,8 +139,20 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    // Check if the two numbers add up to the target
+                    if (nums[i] + nums[j] == target)
+                    {
+                        return new int[] { i, j }; // Return the indices
+                    }
+                }
+            }
+
+                // Return an empty array if no solution is found
+                return new int[0];
             }
             catch (Exception)
             {
@@ -104,8 +165,47 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Initialize the variables to track the largest and smallest numbers
+            int[] max = { int.MinValue, int.MinValue, int.MinValue }; // For the largest three
+            int[] min = { int.MaxValue, int.MaxValue };             // For the smallest two
+
+            // Traverse the array to find the required values
+            foreach (int num in nums)
+            {
+                // Update the largest three
+                if (num > max[0])
+                {
+                    max[2] = max[1];
+                    max[1] = max[0];
+                    max[0] = num;
+                }
+                else if (num > max[1])
+                {
+                    max[2] = max[1];
+                    max[1] = num;
+                }
+                else if (num > max[2])
+                {
+                    max[2] = num;
+                }
+
+                // Update the smallest two
+                if (num < min[0])
+                {
+                    min[1] = min[0];
+                    min[0] = num;
+                }
+                else if (num < min[1])
+                {
+                    min[1] = num;
+                }
+            }
+
+                // Calculate the maximum product of three numbers
+                int product1 = max[0] * max[1] * max[2]; // Product of the three largest numbers
+                int product2 = min[0] * min[1] * max[0];  // Product of the two smallest and the largest
+
+                return Math.Max(product1, product2); // Return the maximum of the two products
             }
             catch (Exception)
             {
@@ -118,8 +218,8 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+                // built-in Convert.ToString to convert to binary
+                return Convert.ToString(decimalNumber, 2);
             }
             catch (Exception)
             {
@@ -132,8 +232,19 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                 // Start with the first element as the minimum
+                int minimum = nums[0];
+
+                // Iterate through the array to find the minimum
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    if (nums[i] < minimum)
+                    {
+                        minimum = nums[i]; // Update minimum if a smaller element is found
+                    }
+                }
+
+                return minimum;
             }
             catch (Exception)
             {
@@ -146,8 +257,30 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                // Negative numbers are not palindromes
+                if (x < 0)
+                {
+                    return false;
+                }
+
+                // Numbers that end with 0 (except for 0 itself) are not palindromes
+                if (x % 10 == 0 && x != 0)
+                {
+                    return false;
+                }
+
+                int rev = 0;
+                int org = x;
+
+                while (x > 0)
+                {
+                    int digit = x % 10; // Get the last digit
+                    rev = rev * 10 + digit; // Append digit to reversed number
+                    x /= 10; // Remove the last digit from x
+                }
+
+                // Check if the original number is equal to the reversed number
+                return org == rev;
             }
             catch (Exception)
             {
@@ -160,8 +293,26 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                if (n < 0)
+                {
+                    throw new ArgumentOutOfRangeException("n must be non-negative.");
+                }
+                
+                if (n == 0) return 0;
+                if (n == 1) return 1;
+
+                int a = 0; 
+                int b = 1;
+                int fib = 0; 
+
+                for (int i = 2; i <= n; i++)
+                {
+                    fib = a + b; 
+                    a = b; 
+                    b = fib; 
+                }
+                
+                return fib; 
             }
             catch (Exception)
             {
